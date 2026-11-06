@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PX Trading Analyzer</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080a0d;color:white;font-family:Arial,sans-serif}
+header{padding:22px;background:#11151a;border-bottom:2px solid #e52b35}
+.logo{font-size:30px;font-weight:bold;color:#ff343e}
+.logo span{color:white}
+main{max-width:650px;margin:auto;padding:18px}
+.card{background:#151a20;border:1px solid #292f37;border-radius:16px;padding:18px;margin:16px 0}
+h2{font-size:20px}
+.sub{color:#9da6b1;font-size:14px}
+.upload{border:2px dashed #e52b35;border-radius:14px;padding:25px;text-align:center;cursor:pointer}
+.upload input{display:none}
+button{border:0;border-radius:10px;padding:14px;background:#e52b35;color:white;font-size:17px;font-weight:bold;width:100%;cursor:pointer}
+button:disabled{opacity:.5}
+#preview{width:100%;margin-top:15px;border-radius:10px;display:none}
+.signal{font-size:28px;font-weight:bold;text-align:center;padding:20px}
+.green{color:#16d889}.red{color:#ff414b}.yellow{color:#ffd34c}
+.stat{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #303640}
+footer{text-align:center;color:#858d98;padding:20px;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">PX <span>TRADING ANALYZER</span></div>
+<div class="sub">محلل التداول الذكي - Pocket Option</div>
+</header>
+<main>
+<div class="card">
+<h2>📊 تحليل صورة الشارت</h2>
+<p class="sub">ارفع صورة من منصة Pocket Option لتحليلها</p>
+<label class="upload">
+📷
+<h3>اختر صورة الشارت</h3>
+<p class="sub">اضغط هنا لفتح معرض الصور أو الكاميرا</p>
+<input type="file" id="photo" accept="image/*">
+</label>
+<img id="preview" alt="صورة الشارت">
+</div>
+<div class="card">
+<h2>⚙️ إعدادات التحليل</h2>
+<div class="stat"><span>زوج التداول</span><span>حسب الصورة</span></div>
+<div class="stat"><span>مدة الصفقة</span>
+<select id="duration" style="background:#252b33;color:white;padding:8px;border-radius:7px">
+<option>1 دقيقة</option>
+<option>2 دقيقة</option>
+<option>3 دقائق</option>
+<option>5 دقائق</option>
+</select></div>
+</div>
+<div class="card">
+<button id="analyze">بدء تحليل الشارت</button>
+<div id="result" style="display:none">
+<div class="signal yellow" id="signal">WAIT</div>
+<p class="sub" id="message" style="text-align:center"></p>
+</div>
+</div>
+<div class="card">
+<h2>📈 معلومات التحليل</h2>
+<div class="stat"><span>الاتجاه</span><span>بانتظار التحليل</span></div>
+<div class="stat"><span>الزخم</span><span>--</span></div>
+<div class="stat"><span>الدعم والمقاومة</span><span>--</span></div>
+<div class="stat"><span>قوة الإشارة</span><span>--</span></div>
+</div>
+<div class="card sub">
+⚠️ هذه نسخة واجهة أولية. لم يتم ربط محرك ذكاء اصطناعي بعد، ولا تصدر إشارات تداول حقيقية. لا تعتمد عليها في تنفيذ الصفقات.
+</div>
+</main>
+<footer>PX TRADING ANALYZER © 2026</footer>
+<script>
+const photo=document.getElementById('photo');
+const preview=document.getElementById('preview');
+const analyze=document.getElementById('analyze');
+photo.addEventListener('change',()=>{
+ const file=photo.files[0];
+ if(!file)return;
+ if(!file.type.startsWith('image/'))return alert('اختر صورة صحيحة');
+ preview.src=URL.createObjectURL(file);
+ preview.style.display='block';
+ document.getElementById('result').style.display='none';
+});
+analyze.addEventListener('click',()=>{
+ if(!photo.files.length){
+ alert('من فضلك ارفع صورة الشارت أولا');
+ return;
+ }
+ alert('الواجهة جاهزة، لكن يجب ربط خادم التحليل الآمن قبل إصدار إشارات حقيقية.');
+});
+</script>
+</body>
+                                                     </html>
+  
