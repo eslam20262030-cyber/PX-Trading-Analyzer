@@ -1,98 +1,197 @@
 
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PX Trading Analyzer</title>
+<title>PX Ultimate Analyzer</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080a0d;color:white;font-family:Arial,sans-serif}
-header{padding:22px;background:#11151a;border-bottom:2px solid #e52b35}
-.logo{font-size:30px;font-weight:bold;color:#ff343e}
+body{margin:0;background:#080a0e;color:#fff;font-family:Arial}
+header{background:#141920;padding:22px;text-align:center;border-bottom:2px solid #e52b35}
+.logo{font-size:27px;font-weight:bold;color:#ff3945}
 .logo span{color:white}
-main{max-width:650px;margin:auto;padding:18px}
-.card{background:#151a20;border:1px solid #292f37;border-radius:16px;padding:18px;margin:16px 0}
-h2{font-size:20px}
-.sub{color:#9da6b1;font-size:14px}
-.upload{border:2px dashed #e52b35;border-radius:14px;padding:25px;text-align:center;cursor:pointer}
-.upload input{display:none}
-button{border:0;border-radius:10px;padding:14px;background:#e52b35;color:white;font-size:17px;font-weight:bold;width:100%;cursor:pointer}
+main{max-width:650px;margin:auto;padding:15px}
+.card{background:#151b23;border:1px solid #303944;border-radius:15px;padding:17px;margin:14px 0}
+h2{font-size:19px;margin-top:0}
+.sub{color:#aab3bf;font-size:13px}
+select,input,button{width:100%;padding:13px;border-radius:9px;margin:8px 0;font-size:15px}
+select,input{background:#242d38;color:white;border:1px solid #414b58}
+button{background:#e52b35;color:white;border:0;font-weight:bold;cursor:pointer}
 button:disabled{opacity:.5}
-#preview{width:100%;margin-top:15px;border-radius:10px;display:none}
-.signal{font-size:28px;font-weight:bold;text-align:center;padding:20px}
+.upload{display:block;border:2px dashed #e52b35;border-radius:12px;padding:22px;text-align:center}
+#preview{width:100%;display:none;margin-top:12px;border-radius:10px}
+.row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #303944}
 .green{color:#16d889}.red{color:#ff414b}.yellow{color:#ffd34c}
-.stat{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #303640}
-footer{text-align:center;color:#858d98;padding:20px;font-size:12px}
+.signal{text-align:center;font-size:30px;font-weight:bold;padding:15px}
+footer{text-align:center;color:#8993a0;padding:20px;font-size:12px}
 </style>
 </head>
 <body>
 <header>
-<div class="logo">PX <span>TRADING ANALYZER</span></div>
-<div class="sub">محلل التداول الذكي - Pocket Option</div>
+<div class="logo">PX <span>ULTIMATE ANALYZER</span></div>
+<p class="sub">محلل الأسواق الذكي | القاهرة</p>
 </header>
+
 <main>
 <div class="card">
-<h2>📊 تحليل صورة الشارت</h2>
-<p class="sub">ارفع صورة من منصة Pocket Option لتحليلها</p>
+<h2>📊 اختيار طريقة التحليل</h2>
+<select id="mode">
+<option value="image">تحليل صورة الشارت</option>
+<option value="pair">تحليل باختيار الزوج</option>
+</select>
+</div>
+
+<div class="card" id="imageBox">
+<h2>📷 رفع صورة الشارت</h2>
 <label class="upload">
-📷
-<h3>اختر صورة الشارت</h3>
-<p class="sub">اضغط هنا لفتح معرض الصور أو الكاميرا</p>
+اضغط لاختيار صورة الشارت
 <input type="file" id="photo" accept="image/*">
 </label>
-<img id="preview" alt="صورة الشارت">
+<img id="preview" alt="معاينة الشارت">
 </div>
+
+<div class="card" id="pairBox">
+<h2>🌍 اختيار زوج التداول</h2>
+<input id="search" placeholder="ابحث عن زوج التداول">
+<select id="market">
+<option value="all">كل الأزواج</option>
+<option value="otc">OTC فقط</option>
+<option value="global">الأزواج العالمية</option>
+</select>
+<select id="pair">
+<option value="EURUSD_otc">EUR/USD OTC</option>
+<option value="GBPUSD_otc">GBP/USD OTC</option>
+<option value="USDJPY_otc">USD/JPY OTC</option>
+<option value="AUDUSD_otc">AUD/USD OTC</option>
+<option value="EURUSD">EUR/USD عالمي</option>
+<option value="GBPUSD">GBP/USD عالمي</option>
+<option value="USDJPY">USD/JPY عالمي</option>
+</select>
+<p class="sub">هذه قائمة تجريبية. ستُستبدل بفهرس الأزواج المتاح من مصدر البيانات.</p>
+</div>
+
 <div class="card">
 <h2>⚙️ إعدادات التحليل</h2>
-<div class="stat"><span>زوج التداول</span><span>حسب الصورة</span></div>
-<div class="stat"><span>مدة الصفقة</span>
-<select id="duration" style="background:#252b33;color:white;padding:8px;border-radius:7px">
-<option>1 دقيقة</option>
-<option>2 دقيقة</option>
-<option>3 دقائق</option>
-<option>5 دقائق</option>
-</select></div>
+<div class="row"><span>الفترة الأولى</span><b>5 دقائق</b></div>
+<div class="row"><span>الفترة الثانية</span><b>15 دقيقة</b></div>
+<div class="row"><span>الاتجاه العام</span><b>ساعة</b></div>
+<label>مدة الصفقة</label>
+<select id="duration">
+<option value="1">دقيقة واحدة</option>
+<option value="2">دقيقتان</option>
+<option value="3">3 دقائق</option>
+<option value="4">4 دقائق</option>
+<option value="5">5 دقائق</option>
+<option value="auto">اختيار تلقائي حسب الفرصة</option>
+</select>
 </div>
+
 <div class="card">
-<button id="analyze">بدء تحليل الشارت</button>
+<h2>🧠 محرك التحليل</h2>
+<div class="sub">
+RSI - MACD - EMA - SMA - Bollinger Bands -
+Stochastic - ADX - ATR - الدعم والمقاومة -
+الشموع اليابانية - الاتجاه العام.
+</div>
+<button id="analyze">بدء التحليل</button>
 <div id="result" style="display:none">
 <div class="signal yellow" id="signal">WAIT</div>
-<p class="sub" id="message" style="text-align:center"></p>
+<p id="message" class="sub" style="text-align:center"></p>
 </div>
 </div>
+
 <div class="card">
-<h2>📈 معلومات التحليل</h2>
-<div class="stat"><span>الاتجاه</span><span>بانتظار التحليل</span></div>
-<div class="stat"><span>الزخم</span><span>--</span></div>
-<div class="stat"><span>الدعم والمقاومة</span><span>--</span></div>
-<div class="stat"><span>قوة الإشارة</span><span>--</span></div>
+<h2>📈 تفاصيل النتيجة</h2>
+<div class="row"><span>اتجاه 5 دقائق</span><b id="t5">--</b></div>
+<div class="row"><span>اتجاه 15 دقيقة</span><b id="t15">--</b></div>
+<div class="row"><span>اتجاه الساعة</span><b id="t60">--</b></div>
+<div class="row"><span>قوة الإشارة</span><b id="confidence">--</b></div>
+<div class="row"><span>مدة الصفقة</span><b id="tradeTime">--</b></div>
+<div class="row"><span>توقيت القاهرة</span><b id="clock">--</b></div>
 </div>
+
 <div class="card sub">
-⚠️ هذه نسخة واجهة أولية. لم يتم ربط محرك ذكاء اصطناعي بعد، ولا تصدر إشارات تداول حقيقية. لا تعتمد عليها في تنفيذ الصفقات.
+⚠️ النسخة الحالية واجهة أولية. لا يوجد اتصال مباشر بأسعار OTC أو محرك ذكاء اصطناعي حتى الآن. لن نصدر توصيات شراء أو بيع قبل وصول بيانات حقيقية وتحليلها واختبار النتائج.
 </div>
 </main>
-<footer>PX TRADING ANALYZER © 2026</footer>
+
+<footer>PX ULTIMATE ANALYZER © 2026</footer>
+
 <script>
-const photo=document.getElementById('photo');
-const preview=document.getElementById('preview');
-const analyze=document.getElementById('analyze');
-photo.addEventListener('change',()=>{
- const file=photo.files[0];
+const $=id=>document.getElementById(id);
+
+$("mode").onchange=()=>{
+ const image=$("mode").value==="image";
+ $("imageBox").style.display=image?"block":"none";
+ $("pairBox").style.display=image?"none":"block";
+};
+
+$("photo").onchange=()=>{
+ const file=$("photo").files[0];
  if(!file)return;
- if(!file.type.startsWith('image/'))return alert('اختر صورة صحيحة');
- preview.src=URL.createObjectURL(file);
- preview.style.display='block';
- document.getElementById('result').style.display='none';
-});
-analyze.addEventListener('click',()=>{
- if(!photo.files.length){
- alert('من فضلك ارفع صورة الشارت أولا');
+ if(!file.type.startsWith("image/")){
+ alert("اختر صورة صحيحة");
  return;
  }
- alert('الواجهة جاهزة، لكن يجب ربط خادم التحليل الآمن قبل إصدار إشارات حقيقية.');
-});
+ $("preview").src=URL.createObjectURL(file);
+ $("preview").style.display="block";
+};
+
+const allPairs=[
+ {name:"EUR/USD OTC",id:"EURUSD_otc",type:"otc"},
+ {name:"GBP/USD OTC",id:"GBPUSD_otc",type:"otc"},
+ {name:"USD/JPY OTC",id:"USDJPY_otc",type:"otc"},
+ {name:"AUD/USD OTC",id:"AUDUSD_otc",type:"otc"},
+ {name:"EUR/USD",id:"EURUSD",type:"global"},
+ {name:"GBP/USD",id:"GBPUSD",type:"global"},
+ {name:"USD/JPY",id:"USDJPY",type:"global"}
+];
+
+function updatePairs(){
+ const type=$("market").value;
+ const q=$("search").value.toLowerCase();
+ const filtered=allPairs.filter(p=>
+ (type==="all"||p.type===type)&&p.name.toLowerCase().includes(q)
+ );
+ $("pair").innerHTML="";
+ filtered.forEach(p=>{
+ const option=document.createElement("option");
+ option.value=p.id;
+ option.textContent=p.name;
+ $("pair").appendChild(option);
+ });
+}
+$("market").onchange=updatePairs;
+$("search").oninput=updatePairs;
+
+function updateClock(){
+ $("clock").textContent=new Date().toLocaleTimeString("ar-EG",{
+ timeZone:"Africa/Cairo"
+ });
+}
+setInterval(updateClock,1000);
+updateClock();
+
+$("analyze").onclick=()=>{
+ if($("mode").value==="image"&&!$("photo").files.length){
+ alert("ارفع صورة الشارت أولا");
+ return;
+ }
+ $("result").style.display="block";
+ $("signal").textContent="WAIT";
+ $("signal").className="signal yellow";
+ $("message").textContent=
+ "محرك التحليل غير متصل بمصدر بيانات حتى الآن. لم يتم إصدار إشارة تداول.";
+ $("t5").textContent="غير متاح";
+ $("t15").textContent="غير متاح";
+ $("t60").textContent="غير متاح";
+ $("confidence").textContent="غير متاحة";
+ $("tradeTime").textContent="غير محددة";
+};
 </script>
 </body>
-                                                     </html>
+ </html>
+ </html>
   
